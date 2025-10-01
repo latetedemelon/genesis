@@ -1,18 +1,23 @@
 package core
 
 import (
-	"github.com/joho/godotenv"
-	"go.uber.org/zap"
 	"log"
 	"os"
 	"path"
+	"runtime"
 	"testing"
+
+	"github.com/joho/godotenv"
+	"go.uber.org/zap"
 )
 
 var Logger = func() *zap.Logger {
-	envFile := path.Join(currentDir(), ".env")
+	_, filename, _, _ := runtime.Caller(0)
+	var root = path.Join(path.Dir(filename), "..")
+
+	envFile := path.Join(root, ".env")
 	if testing.Testing() {
-		envFile = path.Join(currentDir(), ".env.test")
+		envFile = path.Join(root, ".env.test")
 	}
 
 	envSkipped := godotenv.Load(envFile)

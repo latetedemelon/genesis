@@ -1,15 +1,14 @@
 package core
 
 import (
-	"go.uber.org/zap"
 	"os"
-	"path"
 	"path/filepath"
 	"regexp"
-	"runtime"
 	"strconv"
 	"strings"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 type AppConfig struct {
@@ -96,6 +95,6 @@ func resolvePath(path string) string {
 }
 
 func currentDir() string {
-	_, filename, _, _ := runtime.Caller(0)
-	return path.Join(path.Dir(filename), "..")
+	workdir, _ := os.Getwd()
+	return workdir
 }
